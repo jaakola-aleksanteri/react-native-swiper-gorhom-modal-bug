@@ -3,6 +3,7 @@ import {View, Button, Text, Dimensions, StyleSheet} from 'react-native';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {NativeViewGestureHandler} from 'react-native-gesture-handler';
 
 const App = () => {
   // ref
@@ -41,17 +42,21 @@ const App = () => {
             index={1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}>
-            <View style={styles.container}>
-              <SwiperFlatList
-                showPagination
-                data={colors}
-                renderItem={({item}) => (
-                  <View style={[styles.child, {backgroundColor: item}]}>
-                    <Text style={styles.text}>{item}</Text>
-                  </View>
-                )}
-              />
-            </View>
+            <NativeViewGestureHandler disallowInterruption={true}>
+              <View style={styles.container}>
+                <View style={{flex: 1}}>
+                  <SwiperFlatList
+                    showPagination
+                    data={colors}
+                    renderItem={({item}) => (
+                      <View style={[styles.child, {backgroundColor: item}]}>
+                        <Text style={styles.text}>{item}</Text>
+                      </View>
+                    )}
+                  />
+                </View>
+              </View>
+            </NativeViewGestureHandler>
           </BottomSheetModal>
         </View>
       </BottomSheetModalProvider>
